@@ -6,7 +6,6 @@ export default class VDraggablePro extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            border: "1px solid black",
             uId: this.guid()
         }
     }
@@ -26,17 +25,15 @@ export default class VDraggablePro extends Component {
     }
     // 拖动后鼠标进入另一个可接受区域
     dragenter(ee) {
-        ee.target.classList.remove(styles.content);
-        ee.target.classList.add(styles.droppingContent);
-        // ee.target.style.border = '2px dashed #008dff';
-        // ee.target.style.boxShadow = '0 0 8px rgba(30, 144, 255, 0.8)';
+        if (ee.target.className.indexOf('droppedcontent') !== -1) {
+            ee.target.className = styles.droppingContent;
+        }
     }
     // a拖到b，离开b的时候触发
     dragleave(ee) {
-        ee.target.classList.remove(styles.droppingContent);
-        ee.target.classList.add(styles.content);
-        // ee.target.style.border = '1px solid grey';
-        // ee.target.style.boxShadow = '';
+        if (ee.target.className.indexOf('droppingContent') !== -1) {
+            ee.target.className = styles.droppedcontent;
+        }
     }
     // 对象排序
     compare(key) {
@@ -50,7 +47,7 @@ export default class VDraggablePro extends Component {
         }
     }
     // 当一个元素或是选中的文字被拖拽释放到一个有效的释放目标位置时
-    drop(dropedSort, data, sortKey, dropedUid, ee) {
+    drop(dropedSort, data, sortKey, dropedUid, codeKey, ee) {
         // console.log('释放的时候ee', ee)
         ee.preventDefault();
         const code = ee.dataTransfer.getData("code");
@@ -60,7 +57,7 @@ export default class VDraggablePro extends Component {
         if (uId === dropedUid) {
             if (sort < dropedSort) {
                 data.map(item => {
-                    if (item.code === code) {
+                    if (item[codeKey] === code) {
                         item[sortKey] = dropedSort;
                     } else if (item[sortKey] > sort && item[sortKey] < dropedSort + 1) {
                         item[sortKey]--;
@@ -70,7 +67,7 @@ export default class VDraggablePro extends Component {
                 // ee.target.before(document.getElementById(code))
             } else {
                 data.map(item => {
-                    if (item.code === code) {
+                    if (item[codeKey] === code) {
                         item[sortKey] = dropedSort;
                     } else if (item[sortKey] > dropedSort - 1 && item[sortKey] < sort) {
                         item[sortKey]++;
@@ -81,11 +78,11 @@ export default class VDraggablePro extends Component {
             }
         } else if (this.props.isAcceptAdd) {
             let objDragedItem = JSON.parse(dragedItem);
-            if ( data.filter(item => item.code === objDragedItem.code).length === 0 ) {
+            if (data.filter(item => item[codeKey] === objDragedItem[codeKey]).length === 0) {
                 // data.push(objDragedItem);
                 const maxSort = Math.max.apply(Math, data.map(citem => citem[sortKey]));
                 data.map(item => {
-                    if ( dropedSort === maxSort) {
+                    if (dropedSort === maxSort) {
                         objDragedItem[sortKey] = dropedSort + 1;
                     } else {
                         objDragedItem[sortKey] = dropedSort;
@@ -94,41 +91,41 @@ export default class VDraggablePro extends Component {
                     return item
                 });
                 data.push(objDragedItem)
-            } 
+            }
         }
         this.props.onChange(data)
-        console.log('data', data)
-        ee.target.classList.remove(styles.droppingContent);
-        ee.target.classList.add(styles.content);
+        if (ee.target.className.indexOf('droppingContent') !== -1) {
+            ee.target.className = styles.droppedcontent;
+        }
 
     }
     allowDrop(ee) {
         ee.preventDefault();
     }
     // 生成拖拽组件
-    createDraggleComponent(data, sortKey, style, uId, render) {
+    createDraggleComponent(data, sortKey, style, uId, render, codeKey) {
         return data.sort(this.compare(sortKey)).map((item) => {
             return (
                 <div
-                    className={styles.content}
-                    key={item.code}
+                    className={styles.droppedcontent}
+                    key={item[codeKey]}
                     draggable={true}
                     onDragEnter={this.dragenter.bind(this)}
                     onDragLeave={this.dragleave.bind(this)}
-                    onDragStart={this.domdrugstart.bind(this, item[sortKey], item.code, uId, item)}
-                    onDrop={this.drop.bind(this, item[sortKey], data, sortKey, uId)}
+                    onDragStart={this.domdrugstart.bind(this, item[sortKey], item[codeKey], uId, item)}
+                    onDrop={this.drop.bind(this, item[sortKey], data, sortKey, uId,codeKey)}
                     onDragOver={this.allowDrop.bind(this)}
                     style={{ ...style }}>{render(item)}</div>
             )
         })
     }
     render() {
-        const { value, sortKey, style, render } = this.props;
+        const { value, sortKey, codeKey, style, render } = this.props;
         const { uId } = this.state;
         return (
             <Row>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    {this.createDraggleComponent(value, sortKey, style, uId, render)}
+                    {this.createDraggleComponent(value, sortKey, style, uId, render, codeKey)}
                 </div>
             </Row>
         )
