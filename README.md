@@ -11,4 +11,4 @@
 | render| 生成复杂数据的渲染函数，参数为当前行数据 |   function(item) |   －    |
 | isAcceptAdd| 是否接受拖拽复制 |    boolean |   false    |
 | sortKey| 设置根据排序的字段 |    string |  －     |
-| codeKey|  | 制定item中某个字段作为拖拽元素的key，必须唯一 |  －  |
+| codeKey| 制定item中某个字段作为拖拽元素的key，必须唯一| string |  －  |
