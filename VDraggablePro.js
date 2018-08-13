@@ -106,8 +106,8 @@ export default class VDraggablePro extends Component {
         ee.preventDefault();
     }
     // 生成拖拽组件
-    createDraggleComponent(data, sortKey, style, uId) {
-        return data.sort(this.compare("sort")).map((item) => {
+    createDraggleComponent(data, sortKey, style, uId, render) {
+        return data.sort(this.compare(sortKey)).map((item) => {
             return (
                 <div
                     className={styles.content}
@@ -118,17 +118,17 @@ export default class VDraggablePro extends Component {
                     onDragStart={this.domdrugstart.bind(this, item[sortKey], item.code, uId, item)}
                     onDrop={this.drop.bind(this, item[sortKey], data, sortKey, uId)}
                     onDragOver={this.allowDrop.bind(this)}
-                    style={{ ...style }}>{item.content}</div>
+                    style={{ ...style }}>{render(item)}</div>
             )
         })
     }
     render() {
-        const { value, sortKey, style } = this.props;
+        const { value, sortKey, style, render } = this.props;
         const { uId } = this.state;
         return (
             <Row>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    {this.createDraggleComponent(value, sortKey, style, uId)}
+                    {this.createDraggleComponent(value, sortKey, style, uId, render)}
                 </div>
             </Row>
         )
