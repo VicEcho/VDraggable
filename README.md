@@ -3,17 +3,24 @@
 
 # API
 
-参数                        说明                                   类型                        默认值
+参数                  &nbsp&nbsp&nbsp&nbsp说明                                   &nbsp&nbsp&nbsp&nbsp类型                        &nbsp&nbsp默认值
+
 ---
-value                     数据数组                                 array                         []
+value                 &nbsp&nbsp&nbsp&nbsp数据数组                                 &nbsp&nbsp&nbsparray                         &nbsp&nbsp[]
+
 ---
-onChange                  释放拖拽时触发                            function(value)                -
+onChange              &nbsp&nbsp&nbsp&nbsp释放拖拽时触发                            &nbsp&nbsp&nbspfunction(value)                &nbsp&nbsp-
+
 ---
-style                     样式                                    object                         -
+style                 &nbsp&nbsp&nbsp&nbsp样式                                    &nbsp&nbsp&nbspobject                         &nbsp&nbsp-
+
 ---
-render                    生成复杂数据的渲染函数，参数为当前行数据      function(item)                 -    
+render                &nbsp&nbsp&nbsp&nbsp生成复杂数据的渲染函数，参数为当前行数据      &nbsp&nbsp&nbspfunction(item)                 &nbsp&nbsp-    
+
 ---
-isAcceptAdd               是否接受拖拽复制                          boolean                       false    
+isAcceptAdd           &nbsp&nbsp&nbsp&nbsp是否接受拖拽复制                          &nbsp&nbsp&nbspboolean                       &nbsp&nbspfalse    
+
 ---
-sortKey                   设置根据排序的字段                         string                         -    
+sortKey               &nbsp&nbsp&nbsp&nbsp设置根据排序的字段                         &nbsp&nbsp&nbspstring                         &nbsp&nbsp-    
+
 ---
