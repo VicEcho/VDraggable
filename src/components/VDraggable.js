@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row } from 'antd';
-import * as styles from './draggable.less' 
+import * as styles from './draggable.less'
 
 export default class VDraggable extends Component {
     constructor(props) {
@@ -25,7 +24,6 @@ export default class VDraggable extends Component {
     }
     // 拖动后鼠标进入另一个可接受区域
     dragenter(ee) {
-        console.log('ee123123', ee, ee.target, ee.target.className)
         if (ee.target.className.indexOf('droppedcontent') !== -1) {
             ee.target.className = styles.droppingContent;
         }
@@ -124,11 +122,12 @@ export default class VDraggable extends Component {
         const { value, sortKey, codeKey, style, render } = this.props;
         const { uId } = this.state;
         return (
-            <Row>
+            <div>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     {this.createDraggleComponent(value, sortKey, style, uId, render, codeKey)}
                 </div>
-            </Row>
+            </div>
         )
     }
 }
+
