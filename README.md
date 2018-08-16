@@ -3,6 +3,8 @@
 
 # 使用
 ```
+npm install vdraggle
+
 import VDraggable from 'vdraggle';
 
 ```
