@@ -1,6 +1,6 @@
 {
   "name": "vdraggle",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "基于H5实现的react拖拽组件",
   "main": "lib/index.js",
   "scripts": {

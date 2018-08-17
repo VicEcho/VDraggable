@@ -123,7 +123,7 @@ export default class VDraggable extends Component {
         const { uId } = this.state;
         return (
             <div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                     {this.createDraggleComponent(value, sortKey, style, uId, render, codeKey)}
                 </div>
             </div>
