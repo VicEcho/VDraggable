@@ -78,14 +78,15 @@ export default class VDraggable extends Component {
         } else if (this.props.isAcceptAdd) {
             let objDragedItem = JSON.parse(dragedItem);
             if (data.filter(item => item[codeKey] === objDragedItem[codeKey]).length === 0) {
-                // data.push(objDragedItem);
                 const maxSort = Math.max.apply(Math, data.map(citem => citem[sortKey]));
                 data.map(item => {
                     if (dropedSort === maxSort) {
                         objDragedItem[sortKey] = dropedSort + 1;
                     } else {
-                        objDragedItem[sortKey] = dropedSort;
-                        item[sortKey]++
+                        if (item.sort > dropedSort) {
+                            objDragedItem[sortKey] = dropedSort + 1;
+                            item[sortKey]++
+                        }
                     }
                     return item
                 });
