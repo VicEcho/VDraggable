@@ -97,7 +97,6 @@ export default class VDraggable extends Component {
         if (ee.target.className.indexOf('droppingContent') !== -1) {
             ee.target.className = styles.droppedcontent;
         }
-
     }
     allowDrop(ee) {
         ee.preventDefault();
